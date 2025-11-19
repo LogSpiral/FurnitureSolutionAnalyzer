@@ -67,6 +67,7 @@ public class SolutionGenerator : IIncrementalGenerator
 
         sb.AppendLine($"public class {data.SolutionName}Solution : SolutionItemBase<{data.SolutionName}SolutionProjectile>");
         sb.AppendLine("{");
+        sb.AppendLine($"    public override string Texture => \"FurnitureSolution/Solutions/SolutionItemIcon/Solution{data.RowIndex}\";");
         sb.AppendLine("    public override void AddRecipes()");
         sb.AppendLine("    {");
         sb.AppendLine("        CreateRecipe()");
