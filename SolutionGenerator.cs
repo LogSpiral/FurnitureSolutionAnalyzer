@@ -72,7 +72,7 @@ public class SolutionGenerator : IIncrementalGenerator
         sb.AppendLine("    {");
         sb.AppendLine("        CreateRecipe()");
         sb.AppendLine("            .AddIngredient(ItemID.GreenSolution)");
-        sb.AppendLine($"            .AddIngredient({data.IngredientType}, 20)");
+        sb.AppendLine($"            .AddIngredient({data.IngredientType}, 5)");
         sb.AppendLine("            .Register();");
         sb.AppendLine("    }");
         sb.AppendLine("}");
