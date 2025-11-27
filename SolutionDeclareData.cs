@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FurnitureSolutionAnalyzer;
+﻿namespace FurnitureSolutionAnalyzer;
 
 internal readonly struct SolutionDeclareData(
     string solutionName,

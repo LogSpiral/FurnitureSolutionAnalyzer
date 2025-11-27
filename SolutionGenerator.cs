@@ -1,19 +1,14 @@
 ﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 using System.Collections.Immutable;
-using System.Diagnostics;
 using System.Text;
-using System.Xml.Linq;
 
 namespace FurnitureSolutionAnalyzer;
 
 [Generator]
 public class SolutionGenerator : IIncrementalGenerator
 {
-
-    public void Initialize(IncrementalGeneratorInitializationContext context)
+    void IIncrementalGenerator.Initialize(IncrementalGeneratorInitializationContext context)
     {
         string currentNameSpace = "";
         // 筛选 .xml 后缀的文件, 并转换为 document
@@ -84,8 +79,12 @@ public class SolutionGenerator : IIncrementalGenerator
         sb.AppendLine("    }");
         sb.AppendLine("}");
 
-        sb.AppendLine($"public class {data.SolutionName}SolutionProjectile() : SolutionProjectileBase(furnitureTableRowIndex: {data.RowIndex})");
+        sb.AppendLine($"public class {data.SolutionName}SolutionProjectile : SolutionProjectileBase");
         sb.AppendLine("{");
+        sb.AppendLine($"    public {data.SolutionName}SolutionProjectile() : base(furnitureTableRowIndex: {data.RowIndex})");
+        sb.AppendLine("    {");
+        sb.AppendLine($"        FurnitureSolution.FurnitureSetIndexDictionary[\"{data.SolutionName}\"] = {data.RowIndex};");
+        sb.AppendLine("    }");
         sb.AppendLine("    public override void ModifyNewDust(");
         sb.AppendLine("        ref int dustType,");
         sb.AppendLine("        ref Vector2 position,");
@@ -103,7 +102,6 @@ public class SolutionGenerator : IIncrementalGenerator
 
         return sb.ToString();
     }
-
     private static string GenerateYukaSolutionRegister(ImmutableArray<SolutionDeclareData> data)
     {
         HashSet<string> Categories = [];
